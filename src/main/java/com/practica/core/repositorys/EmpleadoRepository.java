@@ -9,5 +9,7 @@ import com.practica.core.entitys.Empleado;
 public interface EmpleadoRepository extends CrudRepository <Empleado, Integer> {
 
 	public abstract Empleado findByNif (String nif);
+	public abstract Empleado findByIdEmpleado (Long idEmpleado);
+	public abstract void deleteByNif (String nif);
 	
 }

@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.micrometer.common.lang.NonNull;
-// import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,76 +28,64 @@ import lombok.NoArgsConstructor;
 @Table(name = "EM_EMPLEADOS")
 public class Empleado {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NonNull
-	@Column (name = "ID_EMPLEADO", nullable = false)
+	@Column(name = "ID_EMPLEADO", nullable = false)
 	private Integer idEmpleado;
-	
-	
-	@Column(name = "TX_NIF")
+
+	@Column(name = "TX_NIF", nullable = false, unique = true)
 	private String nif;
-	
-	@NonNull
-	@Column(name = "TX_NOMBRE")
+
+	@Column(name = "TX_NOMBRE", nullable = false)
 	private String nombre;
-	
+
+	@Column(name = "TX_APELLIDO1", nullable = false)
+	private String apellido1;
+
+	@Column(name = "TX_APELLIDO2", nullable = false)
+	private String apellido2;
+
 	@NonNull
-    @Column(name = "TX_APELLIDO1")
-    private String apellido1;
-    
-	@NonNull
-    @Column(name = "TX_APELLIDO2")
-    private String apellido2;
-    
-	@NonNull
-    @Column(name = "F_NACIMIENTO")
+	@Column(name = "F_NACIMIENTO")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate fechaNacimiento ;
-    
+	private LocalDate fechaNacimiento;
+
 	@NonNull
-    @Column(name = "N_TELEFONO1")
-    private String telefono1;
-    
+	@Column(name = "N_TELEFONO1")
+	private String telefono1;
+
 	@NonNull
-    @Column(name = "N_TELEFONO2")
-    private String telefono2;
-    
+	@Column(name = "N_TELEFONO2")
+	private String telefono2;
+
 	@NonNull
-    @Column(name = "TX_EMAIL")
-    private String email;
-    
-	@JoinTable(name = "pr_proyecto_empleados",
-		joinColumns = @JoinColumn(name = "F_ALTA")
-		)
+	@Column(name = "TX_EMAIL")
+	private String email;
+
+	@JoinTable(name = "pr_proyecto_empleados", joinColumns = @JoinColumn(name = "F_ALTA"))
 	@NonNull
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @Column(name = "F_ALTA")
-    private LocalDate fechaAlta;
-    
-    
-    @Column(name = "F_BAJA")
+	@Column(name = "F_ALTA")
+	private LocalDate fechaAlta;
+
+	@Column(name = "F_BAJA")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate fechaBaja;
-    
-    @NonNull
-    @Column(name = "CX_EDOCIVIL")
-    private String estadoCivil;
-    
-    @NonNull
-    @Column(name = "B_SERVMILITAR")
-    private Boolean servicioMilitar;
-    
-    
-   	@ManyToMany
-	@JoinTable(name = "empleado_proyecto", 
-		joinColumns = @JoinColumn(name = "empleado_id"), 
-		inverseJoinColumns = @JoinColumn(name = "proyecto_id"))
-    private Set<Proyecto> proyectos = new HashSet<>();
+	private LocalDate fechaBaja;
+
+	@NonNull
+	@Column(name = "CX_EDOCIVIL")
+	private String estadoCivil;
+
+	@NonNull
+	@Column(name = "B_SERVMILITAR")
+	private Boolean servicioMilitar;
+
+	@ManyToMany
+	@JoinTable(name = "empleado_proyecto", joinColumns = @JoinColumn(name = "empleado_id"), inverseJoinColumns = @JoinColumn(name = "proyecto_id"))
+	private Set<Proyecto> proyectos = new HashSet<>();
 
 	public Integer getIdEmpleado() {
 		return idEmpleado;
@@ -205,7 +192,7 @@ public class Empleado {
 	}
 
 	public Empleado(Integer idEmpleado, String nif, String nombre, String apellido1, String apellido2,
-			LocalDate fechaNacimiento, String telefono1, String telefono2, String email, 
+			LocalDate fechaNacimiento, String telefono1, String telefono2, String email,
 			LocalDate fechaAlta,
 			LocalDate fechaBaja, String estadoCivil, Boolean servicioMilitar) {
 		super();
@@ -223,8 +210,5 @@ public class Empleado {
 		this.estadoCivil = estadoCivil;
 		this.servicioMilitar = servicioMilitar;
 	}
-
-							
-    
 
 }

@@ -10,23 +10,39 @@ import com.practica.core.repositorys.EmpleadoRepository;
 
 @Service
 public class EmpleadoServices {
-	
-	@Autowired 
+
+	@Autowired
 	EmpleadoRepository empleadoRepository;
-	public ArrayList <Empleado> obtenerEmpleados(){
-		
-		return ( ArrayList <Empleado> ) empleadoRepository.findAll();
-		
+
+	public ArrayList<Empleado> obtenerEmpleados() {
+
+		return (ArrayList<Empleado>) empleadoRepository.findAll();
+
 	}
-	
-	public Empleado guardarEmpleado (Empleado empleado) {
-		
+
+	public Empleado guardarEmpleado(Empleado empleado) {
+
 		return empleadoRepository.save(empleado);
 	}
 
 	public Empleado buscarEmpleadoPorNif(String nif) {
-		
+
 		return empleadoRepository.findByNif(nif);
+	}
+
+	public Empleado buscarEmpleadoPorId(Long idEmpleado) {
+
+		return empleadoRepository.findByIdEmpleado(idEmpleado);
+	}
+
+	public void eliminarEmpleado(String nif) {
+
+		empleadoRepository.deleteByNif(nif);
+	}
+
+	public Empleado actualizarEmpleado(Empleado empleado) {
+
+		return empleadoRepository.save(empleado);
 	}
 
 }
